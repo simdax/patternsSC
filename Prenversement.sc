@@ -44,6 +44,7 @@ PchordsList : ListPattern {
 	}
 }
 
+//stay in range
 Pchords2 : FilterPattern{
 
 	embedInStream{ arg inval;

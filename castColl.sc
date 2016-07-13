@@ -56,13 +56,20 @@
 // 		^this.as(Vecteurs).asChords
 // 	}
 // }
-
++ Pattern{
+	pseq{^this}
+}
++SimpleNumber{
+	pseq{^this.asArray.pseq}
+}
 +Collection{
 	// ça c'est trop ze truc de BOGOSS
 	pseq{ arg rep=1, random=false;
 		^random.if
 		{Prand(this, this.size)}
-		{Pseq(this, rep)}
+		{Pseq(
+			if(this==[]){[1]}{this},
+			rep)}
 	}
 	ptuple{ arg rep=1;
 		^Ptuple(this, rep)

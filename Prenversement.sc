@@ -44,7 +44,7 @@ PchordsList : ListPattern {
 	}
 }
 
-//stay in range
+//stay in range, works with interval
 Pchords2 : FilterPattern{
 
 	embedInStream{ arg inval;
@@ -87,10 +87,10 @@ Pchords : FilterPattern{
 	embedInStream{ arg inval;
 		var rot=0, res=[0,2,4];
 		var l=pattern.asStream;
-		res=(l.next(inval)+[0,2,4]);
-		inval=res.embedInStream(inval);
+		res=(l.next(inval)+[0,2,4]).postln;
+		inval=res.postln.embedInStream(inval);
 		loop{
-			var n=l.next(inval);
+			var n=l.next(inval) - (res.first) ;
 			if(n.isNil){^nil}{n=n.wrap(-3,3)};
 			res=(res+(
 				n.switch(

@@ -85,12 +85,14 @@ Pchords2 : FilterPattern{
 Pchords : FilterPattern{
 
 	embedInStream{ arg inval;
-		var rot=0, res=[0,2,4];
+		var rot=0, res=[0,2,4], b=0;
 		var l=pattern.asStream;
-		res=(l.next(inval)+[0,2,4]).postln;
-		inval=res.postln.embedInStream(inval);
+		b=l.next(inval);
+		res=(b+[0,2,4]);
+		inval=res.embedInStream(inval);
 		loop{
-			var n=l.next(inval) - (res.first) ;
+			var basse=l.next(inval);
+			var n= basse - b ;
 			if(n.isNil){^nil}{n=n.wrap(-3,3)};
 			res=(res+(
 				n.switch(
@@ -105,7 +107,9 @@ Pchords : FilterPattern{
 					0,0,1,0,2,1,3,1,-3,-1,-2,-1,-1,0
 				)
 			);
-			inval=(res.copy.sort).embedInStream(inval)
+			
+			b=basse;
+			inval=(res.copy.sort).embedInStream(inval);
 		}
 		^inval
 	}
@@ -113,7 +117,7 @@ Pchords : FilterPattern{
 }
 /*
 
-Pchords([2].pseq(inf)).iter.nextN(10)
+Pchords([2,0, 3,4,7,1].pseq(inf)).iter.nextN(10)
 Pchords2([2].pseq(inf)).iter.nextN(10)
 
 	PchordsList([0,1,2,3,4].scramble.postln.differentiate.postln).iter.nextN(7)

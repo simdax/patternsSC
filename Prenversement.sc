@@ -117,7 +117,11 @@ Pchords : FilterPattern{
 }
 /*
 
-Pchords([2,0, 3,4,7,1].pseq(inf)).iter.nextN(10)
+Pchords([2,0, 3,4,7,1].pseq(inf))
+.wrap(-1,5)
+.collect(_.sort)
+.iter.nextN(10)
+
 Pchords2([2].pseq(inf)).iter.nextN(10)
 
 	PchordsList([0,1,2,3,4].scramble.postln.differentiate.postln).iter.nextN(7)

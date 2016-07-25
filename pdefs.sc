@@ -251,8 +251,16 @@
 		)
 	}	
 }
++ Pdef{
+	toggle{
+		if(this.isPlaying)
+		{this.stop}
+		{this.play}
+	}
 
+}
 + Pattern {
+
 	midi{
 		arg out=5, chan;
 		var m=MIDIOut(out);
@@ -273,10 +281,6 @@
 		^Pbindf(*[this, \midiout, m, \type, type]++(chan!?{[\chan, chan]})) 
 	}
 	
-	tempo{
-		arg vitesse;
-		^Pbindf(this, \stretch, vitesse.reciprocal)
-	}
 }
 
 

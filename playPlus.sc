@@ -1,9 +1,3 @@
-+Pdef{
-	play{
-		super.play;
-		this.changed(\play)
-	}
-}
 // + EventPatternProxy{
 // 	play { arg argClock, protoEvent, quant, doReset=false;
 // 		playQuant = quant ? this.quant;

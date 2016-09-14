@@ -257,6 +257,10 @@
 		{this.stop}
 		{this.play}
 	}
+	// TODO catch pattern
+	// trace{
+	// 	this.pattern=this.pattern.trace
+	// }
 
 }
 + Pattern {

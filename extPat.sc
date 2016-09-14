@@ -14,3 +14,10 @@
 	}
 
 }
+
+//
+// z=Pbind(\a, [3, 2, 4].pseq);
+// x=Pbind(\b, [9,8].pseq);
+// d=Pbind(\c, [5,10].pseq) 
+// a=d==>z==>x;
+// a.trace.play

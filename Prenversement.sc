@@ -106,9 +106,14 @@ Pchords : FilterPattern{
 				n.switch(
 					0,0,1,0,2,1,3,1,-3,-1,-2,-1,-1,0
 				)
-			);
-			
+			);			
 			b=basse;
+			if(res.maxItem > 5, {
+				res[res.maxIndex]=res.maxItem-7
+			});
+			if(res.minItem < -1, {
+				res[res.minIndex]=res.minItem+7
+			});
 			inval=(res.copy.sort).embedInStream(inval);
 		}
 		^inval

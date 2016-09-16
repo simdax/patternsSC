@@ -4,17 +4,26 @@ add collect and trace softly
 modifyng without restart pattern
 */
 
-PdefCollect : Pattern{
-	var <key, <actual, <esp;
+PdefCollect{
+	classvar <all;
+	var <key,
+	<actual, <esp;
+	*initClass{all=IdentityDictionary()}
 	*new{ arg key;
-		^super.newCopyArgs(key).init
+		^Pfunc{
+			if(all.at(key).isNil)
+			{this.all.put(key,super.newCopyArgs(key).init)}
+			{this.all}
+			.at(key).actual ? ()
+		}
 	}
 	init{
 		Pdef(key).addDependant(this);
 		this.initPat;
 	}
 	initPat{
-		esp=Pbindf(Pdef(key).collect{arg x; actual=x},
+		esp=Pbindf(Pdef(key).collect{arg x;
+			actual=x},
 			\type, \rest).asEventStreamPlayer
 	}
 	update{arg qui, que, quoi;// qui, quoi, comment;
@@ -22,26 +31,27 @@ PdefCollect : Pattern{
 		if(qui.isKindOf(Pdef)){esp.perform(que)};
 		if(que==\source){esp.stop;this.initPat;esp.play}
 	}
-	embedInStream{ arg in;
-		loop{
-			in=(in++actual).yield
-		}
-	}
+	// embedInStream{ arg in;
+	// 	loop{
+	// 		in=(in++actual).yield
+	// 	}
+	// }
 }
 
-+ Pdef{
-
-	play{
-		super.play;
-		this.changed(\play)
-	}
-	stop{
-		super.stop;
-		this.changed(\stop)
-	}
-	
-
-}
+// + Pdef{
+// 	play{ //arg ... args;
+// 		super.play();//*args);
+// 		this.changed(\play)
+// 	}
+// 	stop{ //arg ... args;
+// 		super.stop;
+// 		this.changed(\stop)
+// 	}
+// 	midi{ arg port, chan;
+// 		//"tchiop ?".postln;
+// 		this.source_(this.source.midi(port, chan));
+// 	}
+//}
 
 
 

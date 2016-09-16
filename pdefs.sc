@@ -282,9 +282,18 @@
 		)
 		{\phrase}{\midi};
 		type.postln;
+		
 		^Pbindf(*[this, \midiout, m, \type, type]++(chan!?{[\chan, chan]})) 
 	}
-	
 }
 
+
++Ppar{
+	chan{ arg chans;
+		this.list=
+		(list+++chans).clump(2).collect{ arg x, y;
+			x.midi(y)
+		}
+	}
+}
 

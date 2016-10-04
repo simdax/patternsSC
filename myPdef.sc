@@ -17,6 +17,9 @@ PdefCollect{
 			.at(key).actual ? ()
 		}
 	}
+	doesNotUndertand{ arg msg;
+		^this.collect(_.perform(msg))
+	}
 	init{
 		Pdef(key).addDependant(this);
 		this.initPat;
@@ -29,7 +32,12 @@ PdefCollect{
 	update{arg qui, que, quoi;// qui, quoi, comment;
 		[qui, que, quoi].postln;
 		if(qui.isKindOf(Pdef)){esp.perform(que)};
-		if(que==\source){esp.stop;this.initPat;esp.play}
+		if(que==\source){
+			if(esp.isPlaying){
+				esp.stop;this.initPat;esp.play}
+			{this.initPat};
+			
+		}
 	}
 	// embedInStream{ arg in;
 	// 	loop{

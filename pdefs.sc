@@ -266,7 +266,7 @@
 + Pattern {
 
 	midi{
-		arg out=5, chan;
+		arg out=0, chan=0;
 		var m=MIDIOut(out);
 		var type=
 		if(

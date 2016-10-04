@@ -3,8 +3,9 @@ PSoleil : ListPattern{
 		arg in;
 		var chrono=Ptime().asStream, val, t;
 		list=list.iter.repeat;
-		val;
+		// begin with a yield
 		t=list.next.yield;
+		// then check
 		loop{if(chrono.next>repeats){
 			in=t.yield
 		}{
@@ -14,7 +15,9 @@ PSoleil : ListPattern{
 	}
 }
 
-// Pbind(
-// 	\do, PSoleil("acaba", 6),
-// 	\dur, 0.5
-// ).trace.play
+/*
+Pbind(
+	\do, PSoleil("acaba", 3),
+	\dur, 0.25
+).finDur(6).trace.play
+*/

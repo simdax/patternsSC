@@ -86,13 +86,17 @@ Pchords : FilterPattern{
 
 	embedInStream{ arg inval;
 		var rot=0, res=[0,2,4], b=0;
-		var l=pattern.asStream;
-		b=l.next(inval);
+		var list=pattern.asStream;
+		var basse, n;
+		// first is just N+0,2,4
+		b=list.next(inval);
 		res=(b+[0,2,4]);
-		inval=res.embedInStream(inval);
-		loop{
-			var basse=l.next(inval);
-			var n= basse - b ;
+		inval=res.yield(inval);
+		while{
+			basse=list.next(inval);
+			basse.notNil
+		}{
+			n= basse - b ;
 			if(n.isNil){^nil}{n=n.wrap(-3,3)};
 			res=(res+(
 				n.switch(
@@ -108,13 +112,14 @@ Pchords : FilterPattern{
 				)
 			);			
 			b=basse;
+			// constrain
 			if(res.maxItem > 5, {
 				res[res.maxIndex]=res.maxItem-7
 			});
 			if(res.minItem < -1, {
 				res[res.minIndex]=res.minItem+7
 			});
-			inval=(res.copy.sort).embedInStream(inval);
+			inval=(res.copy.sort).yield(inval);
 		}
 		^inval
 	}
@@ -122,9 +127,7 @@ Pchords : FilterPattern{
 }
 /*
 
-Pchords([2,0, 3,4,7,1].pseq(inf))
-.wrap(-1,5)
-.collect(_.sort)
+Pchords([2,2,2,0, 3,4,7,1].pseq())
 .iter.nextN(10)
 
 Pchords2([2].pseq(inf)).iter.nextN(10)
@@ -154,7 +157,7 @@ Pclosest : Pattern{
 		while{tval=t.next/2.pow(nv); tval.notNil}
 		{
 			if(ev.dur > tval)
-			{ nv=nv+1 ; ev=ev.degree.closestHarmo (ev.couleur).yield }
+			{ nv=nv+1 ; ev=ev.degree.(ev.couleur).yield }
 			{ nv=0 ; ev=ev.degree.yield }
 		}
 		^ev
@@ -170,6 +173,6 @@ Pbind(
 	\dur, Prand([0.5,1,2], inf)/4,
 	\couleur, [0,2,4],
 	\degree, Pclosest(1)
-	).trace.play
+).trace.play
 
 */
